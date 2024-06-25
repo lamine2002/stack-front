@@ -32,7 +32,7 @@ export default {
 
 <template>
   <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">Login</h2>
+    <h2 class="text-2xl font-bold mb-4">Se connecter</h2>
     <form @submit.prevent="login" class="space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-700">Email:</label>
@@ -59,6 +59,10 @@ export default {
         Login
       </button>
       <p v-if="error" class="text-red-500 mt-2">{{ error }}</p>
+
+      <p class="mt-4">
+        Pas encore de compte? <router-link to="/register" class="text-blue-500">Inscrivez-vous</router-link>
+      </p>
     </form>
   </div>
 </template>

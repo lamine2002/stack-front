@@ -1,10 +1,36 @@
 <script setup>
+import axios from 'axios';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const email = ref('');
+const password = ref('');
+const error = ref('');
+
+const router = useRouter();
+
+
+const register = () => {
+  axios.post('http://127.0.0.1:8000/api/register', {
+    email: email.value,
+    password: password.value
+  })
+  .then(response => {
+    localStorage.setItem('token', response.data.token);
+    // token expire après 1 heure
+    localStorage.setItem('tokenExpiration', Date.now() + 3600 * 1000);
+    router.push('/students');
+  })
+  .catch(error => {
+    error.value = 'Informations Invalides';
+  });
+}
 
 </script>
 
 <template>
   <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">Register</h2>
+    <h2 class="text-2xl font-bold mb-4">S'Inscrire</h2>
     <form @submit.prevent="register" class="space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-700">Email:</label>
@@ -31,6 +57,10 @@
         Register
       </button>
       <p v-if="error" class="text-red-500 mt-2">{{ error }}</p>
+
+      <p class="mt-4">
+        Deja un compte? <router-link to="/login" class="text-blue-500">Connectez-vous</router-link>
+      </p>
     </form>
   </div>
 </template>
