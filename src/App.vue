@@ -1,9 +1,11 @@
 <script setup>
 
 
+import Layout from "./components/Layout.vue";
 </script>
 <template>
-  <router-view></router-view>  <!-- Point de montage pour les routes -->
+  <Layout />
+
 </template>
 
 

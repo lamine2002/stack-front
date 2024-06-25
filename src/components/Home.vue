@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import {ref} from "vue";
+import Sidebar from "./Sidebar.vue";
 
 const questions = ref([]);
 
@@ -16,9 +17,10 @@ axios.get('http://127.0.0.1:8000/api/questions')
 </script>
 
 <template>
+
   <div class="container mx-auto px-4">
 
-      <div v-for="question in questions" :key="question.id" class="border p-4 rounded-md mt-4">
+      <div v-for="question in questions" :key="question.id" class="border p-4 rounded-md my-8">
         <h2 class="text-xl font-bold mb-2">{{ question.title }}</h2>
         <p class="text-gray-700">{{ question.body }}</p>
         <div class="mt-2">
