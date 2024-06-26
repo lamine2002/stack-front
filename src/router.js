@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from './components/Login.vue';
 import Register from "./components/Register.vue";
 import Home from "./components/Home.vue";
+import QuestionDetail from "./components/QuestionDetail.vue";
 
 
 const routes = [
@@ -10,6 +11,11 @@ const routes = [
   {
     path: '/register', component: Register
   },
+  {
+    path: '/question/show/:id',
+    component: QuestionDetail,
+    props: true // Active la récupération automatique des paramètres d'URL
+  }
   // {
   //   path: '/students',
   //   component: Student,
