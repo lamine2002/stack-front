@@ -6,7 +6,7 @@ const user = ref(null);
 
 onMounted(async () => {
   user.value = await getUserConnected();
-  console.log(user.value);
+  // console.log(user.value);
 });
 </script>
 

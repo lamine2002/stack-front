@@ -22,7 +22,7 @@ onMounted(async () => {
   user.value = await getUserConnected();
   console.log(user.value);
 });
-const createQuestion = () => {
+const goCreateQuestion = () => {
   // verifier si l'utilisateur est connecte
   if (user.value === null) {
     alert('Vous devez vous connecter pour poser une question');
@@ -37,7 +37,7 @@ const createQuestion = () => {
 <!--  Mettre le titre Question et a cote ajoute un bouton poser une question qui est un lien situe tout a droite en utilisant les flex et justify-content-->
   <div class="flex justify-between items-center">
     <h1 class="text-4xl font-bold">Questions</h1>
-    <router-link @click="createQuestion" to="" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-lg">Une question ?</router-link>
+    <router-link @click="goCreateQuestion" to="" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-lg">Une question ?</router-link>
   </div>
 
   <div class="container mx-auto px-4">

@@ -3,6 +3,7 @@ import Login from './components/Login.vue';
 import Register from "./components/Register.vue";
 import Home from "./components/Home.vue";
 import QuestionDetail from "./components/QuestionDetail.vue";
+import CreateQuestion from "./components/CreateQuestion.vue";
 
 
 const routes = [
@@ -15,12 +16,12 @@ const routes = [
     path: '/question/show/:id',
     component: QuestionDetail,
     props: true // Active la récupération automatique des paramètres d'URL
+  },
+  {
+    path: '/question/create',
+    component: CreateQuestion,
+    meta: { requiresAuth: true }  // Ajoute la métadonnée pour la protection de la route
   }
-  // {
-  //   path: '/students',
-  //   component: Student,
-  //   meta: { requiresAuth: true }  // Ajoute la métadonnée pour la protection de la route
-  // }
 ];
 
 const router = createRouter({
