@@ -17,6 +17,12 @@ axios.get('http://127.0.0.1:8000/api/questions')
 </script>
 
 <template>
+<!--  Mettre le titre Question et a cote ajoute un bouton poser une question qui est un lien situe tout a droite en utilisant les flex et justify-content-->
+  <div class="flex justify-between items-center">
+    <h1 class="text-4xl font-bold">Questions</h1>
+    <router-link to="/question/create" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-lg">Une question ?</router-link>
+  </div>
+
   <div class="container mx-auto px-4">
       <div v-for="question in questions" :key="question.id" class="border p-4 rounded-md my-8">
         <router-link :to="{ path: '/question/show/' + question.id }" >

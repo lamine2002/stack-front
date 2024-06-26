@@ -1,5 +1,13 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+import { getUserConnected } from "../userConnected.js";
 
+const user = ref(null);
+
+onMounted(async () => {
+  user.value = await getUserConnected();
+  console.log(user.value);
+});
 </script>
 
 <template>
@@ -18,17 +26,23 @@
               <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
           </button>
-          <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
-            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
-          </a>
+          <router-link to="/" class="flex ms-2 md:me-24">
+            <svg fill="#000000" width="50px" height="50px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.826 10.083a.784.784 0 0 0-.468-.175h-.701v4.198h.701a.786.786 0 0 0 .469-.175c.155-.117.233-.292.233-.525v-2.798c.001-.233-.079-.408-.234-.525zM19.236 3H4.764C3.791 3 3.002 3.787 3 4.76v14.48c.002.973.791 1.76 1.764 1.76h14.473c.973 0 1.762-.787 1.764-1.76V4.76A1.765 1.765 0 0 0 19.236 3zM9.195 13.414c0 .755-.466 1.901-1.942 1.898H5.389V8.665h1.903c1.424 0 1.902 1.144 1.903 1.899v2.85zm4.045-3.562H11.1v1.544h1.309v1.188H11.1v1.543h2.142v1.188h-2.498a.813.813 0 0 1-.833-.792V9.497a.813.813 0 0 1 .792-.832h2.539l-.002 1.187zm4.165 4.632c-.531 1.235-1.481.99-1.906 0l-1.548-5.818h1.309l1.193 4.569 1.188-4.569h1.31l-1.546 5.818z"/>
+            </svg>
+            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">DevQuestion</span>
+          </router-link>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center" v-if="user">
           <div class="flex items-center ms-3">
             <div>
               <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+
+                <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                  <!--  Initial de l'utilisateur connecte en prenant la 1er lettre du prenom et celui du non s'il en a et ils sont separe par un espace dans le name                -->
+                  <span class="absolute inset-0 text-2xl font-semibold text-gray-800 flex items-center justify-center dark:text-gray-300">{{ user.name.charAt(0) }} {{ user.name.split(' ')[1] ? user.name.split(' ')[1].charAt(0) : '' }}</span>
+                </div>
+
               </button>
             </div>
             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
@@ -75,15 +89,16 @@
           </router-link>
 
         </li>
-        <li>
-          <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+        <li v-if="user">
+          <router-link to="/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 
             <svg fill="currentColor" class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
               <title>quora</title>
               <path d="M18.167 26.807c-1.034 0.29-2.221 0.457-3.447 0.457-7.256 0-13.146-5.848-13.215-13.087l-0-0.007c0.052-7.283 5.967-13.166 13.257-13.166s13.206 5.884 13.257 13.163l0 0.005c0 0.031 0 0.067 0 0.103 0 4.118-1.952 7.78-4.982 10.111l-0.030 0.022c0.955 1.435 1.928 2.392 3.314 2.392 0.012 0 0.025 0 0.039 0 1.161 0 2.11-0.91 2.172-2.055l0-0.006h1.946c0.012 0.141 0.019 0.305 0.019 0.471 0 3.197-2.592 5.789-5.789 5.789-0.065 0-0.13-0.001-0.195-0.003l0.009 0c-2.824-0.018-5.251-1.7-6.35-4.115l-0.018-0.044zM16.922 24.374c-1.038-2.043-2.256-4.108-4.634-4.108-0.014-0-0.030-0-0.046-0-0.461 0-0.901 0.096-1.298 0.27l0.021-0.008-0.807-1.611c1.19-0.948 2.715-1.521 4.375-1.521 0.085 0 0.169 0.002 0.252 0.004l-0.012-0c0.061-0.002 0.132-0.003 0.204-0.003 2.53 0 4.735 1.395 5.887 3.458l0.018 0.034c0.724-1.784 1.144-3.853 1.144-6.020 0-0.245-0.005-0.489-0.016-0.731l0.001 0.034c0-6.976-2.179-10.556-7.275-10.556-5.021 0-7.194 3.58-7.194 10.556 0 6.939 2.173 10.483 7.194 10.483 0.036 0.001 0.078 0.001 0.12 0.001 0.736 0 1.447-0.103 2.121-0.295l-0.054 0.013z"></path>
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Mes Questions</span>
-          </a>
+          </router-link>
+
         </li>
         <li>
           <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -103,7 +118,7 @@
           </a>
         </li>
 
-        <li>
+        <li v-if="!user">
 
           <router-link to="/login" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -113,7 +128,7 @@
           </router-link>
 
         </li>
-        <li>
+        <li v-if="!user">
 
           <router-link to="/register" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -131,8 +146,6 @@
 
   <div class="p-4 sm:ml-64">
     <div class="p-4 border-gray-200  rounded-lg dark:border-gray-700 mt-14">
-
-
 
           <!--    Mettre les components ici apres chaque redirection du router    -->
           <router-view></router-view>

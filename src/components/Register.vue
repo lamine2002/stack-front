@@ -19,7 +19,7 @@ const register = () => {
     localStorage.setItem('token', response.data.token);
     // token expire après 1 heure
     localStorage.setItem('tokenExpiration', Date.now() + 3600 * 1000);
-    router.push('/students');
+    router.push('/');
   })
   .catch(error => {
     error.value = 'Informations Invalides';
@@ -29,6 +29,11 @@ const register = () => {
 </script>
 
 <template>
+
+  <div class=" max-w ml-12 mx-auto flex justify-between items-center">
+    <router-link to="/" class="mt-24 bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-lg">Retour</router-link>
+  </div>
+
   <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-4">S'Inscrire</h2>
     <form @submit.prevent="register" class="space-y-4">
