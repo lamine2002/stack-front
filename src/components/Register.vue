@@ -13,7 +13,8 @@ const router = useRouter();
 const register = () => {
   axios.post('http://127.0.0.1:8000/api/register', {
     email: email.value,
-    password: password.value
+    password: password.value,
+    name: name.value
   })
   .then(response => {
     localStorage.setItem('token', response.data.token);
@@ -37,6 +38,16 @@ const register = () => {
   <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-4">S'Inscrire</h2>
     <form @submit.prevent="register" class="space-y-4">
+      <div>
+<!--        ajouter celui du name-->
+        <label class="block text-sm font-medium text-gray-700">Nom:</label>
+        <input
+          type="text"
+          v-model="name"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"      />
+      </div>
+
       <div>
         <label class="block text-sm font-medium text-gray-700">Email:</label>
         <input
