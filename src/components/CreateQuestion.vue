@@ -43,7 +43,12 @@ const createQuestion = () => {
     user_id: user_id.value
   }, config)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
+        alert('Question créée avec succès');
+        title.value = '';
+        body.value = '';
+        selectedTags.value = [];
+
       })
       .catch(error => {
         console.log(error);
@@ -52,7 +57,7 @@ const createQuestion = () => {
 </script>
 
 <template>
-  <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+  <div class="max-w-8xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-4">Poser une question</h2>
     <form @submit.prevent="createQuestion" class="space-y-4">
       <div>
@@ -69,7 +74,7 @@ const createQuestion = () => {
         <textarea
             v-model="body"
             required
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="mt-1 block h-28 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         ></textarea>
       </div>
       <div>
