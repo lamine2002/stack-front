@@ -29,11 +29,32 @@ const timeAgo = (date) => {
   return formatDistanceToNow(new Date(date), { addSuffix: true, locale: fr });
 };
 
+const token = localStorage.getItem('token');
+const config = {
+  headers: { Authorization: `Bearer ${token}` }
+};
 // fonctions pour gérer les votes
 const vote = (answerId, increment) => {
-  const answer = answers.value.find(a => a.id === answerId);
-  if (answer) {
-    answer.votes += increment;
+  if (increment === 1) {
+    // Logique pour voter positivement
+    axios.put(`http://127.0.0.1:8000/api/answers/${answerId}/incrementvote`, {}, config)
+        .then(response => {
+          const index = answers.value.findIndex(answer => answer.id === answerId);
+          answers.value[index].votes++;
+        })
+        .catch(error => {
+         alert(error.response.data.message)
+        });
+  } else {
+    // Logique pour voter négativement
+    axios.put(`http://127.0.0.1:8000/api/answers/${answerId}/decrementvote` , {}, config)
+        .then(response => {
+          const index = answers.value.findIndex(answer => answer.id === answerId);
+          answers.value[index].votes--;
+        })
+        .catch(error => {
+          alert(error.response.data.message)
+        });
   }
 };
 
