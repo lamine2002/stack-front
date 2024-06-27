@@ -14,7 +14,7 @@ const logout = () => {
       router.go();
     })
     .catch(error => {
-      alert('Erreur lors de la deconnexion')
+      alert(error.response.data.message)
     });
 }
 </script>

@@ -13,7 +13,7 @@ axios.get('http://127.0.0.1:8000/api/questions')
     questions.value = response.data.questions;
   })
   .catch(error => {
-    console.log(error);
+    alert(error.response.data.message);
   });
 
 const user = ref(null);

@@ -15,7 +15,7 @@ onMounted(async () => {
     const response = await axios.get('http://127.0.0.1:8000/api/tags');
     tagsList.value = response.data.tags;
   } catch (error) {
-    console.error('Erreur lors de la récupération des tags:', error);
+    console.error(error.response.data.message);
   }
 });
 
@@ -51,7 +51,7 @@ const createQuestion = () => {
 
       })
       .catch(error => {
-        console.log(error);
+        alert(error.response.data.message);
       });
 }
 </script>

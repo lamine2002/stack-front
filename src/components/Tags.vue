@@ -9,7 +9,7 @@ axios.get('http://127.0.0.1:8000/api/tags')
     tags.value = response.data.tags;
   })
   .catch(error => {
-    console.log(error);
+    console.log(error.response.data.message);
   });
 
 </script>
