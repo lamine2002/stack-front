@@ -31,6 +31,7 @@ const routes = [
   {
     path: '/my-questions',
     component: MyQuestions,
+    meta: { requiresAuth: true }
   }
 ];
 

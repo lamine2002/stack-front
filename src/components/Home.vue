@@ -41,7 +41,7 @@ const goCreateQuestion = () => {
   </div>
 
   <div class="container mx-auto px-4">
-      <div v-for="question in questions" :key="question.id" class="border p-4 rounded-md my-8">
+      <div v-for="question in questions" :key="question.id" class="border p-4 rounded-md my-8 hover:shadow-lg">
         <router-link :to="{ path: '/question/show/' + question.id }" >
         <h2 class="text-xl font-bold mb-2">{{ question.title }}</h2>
         <p class="text-gray-700">{{ question.body }}</p>
