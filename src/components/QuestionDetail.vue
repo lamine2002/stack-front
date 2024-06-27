@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import { ref } from 'vue';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import Answer from "./Answer.vue";
 
 const route = useRoute();
 const questionId = ref(route.params.id);
@@ -86,6 +87,10 @@ const editAnswer = (answerId) => {
       </div>
     </div>
   </div>
+
+  <Answer :questionId="questionId" />
+
+
 </template>
 
 <style scoped>
