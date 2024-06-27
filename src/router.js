@@ -5,6 +5,7 @@ import Home from "./components/Home.vue";
 import QuestionDetail from "./components/QuestionDetail.vue";
 import CreateQuestion from "./components/CreateQuestion.vue";
 import Tags from "./components/Tags.vue";
+import MyQuestions from "./components/MyQuestions.vue";
 
 
 const routes = [
@@ -26,6 +27,10 @@ const routes = [
   {
     path: '/tags',
     component: Tags
+  },
+  {
+    path: '/my-questions',
+    component: MyQuestions,
   }
 ];
 

@@ -9,7 +9,7 @@ const questions = ref([]);
 
 axios.get('http://127.0.0.1:8000/api/questions')
   .then(response => {
-    console.log(response.data.questions);
+    // console.log(response.data.questions);
     questions.value = response.data.questions;
   })
   .catch(error => {
