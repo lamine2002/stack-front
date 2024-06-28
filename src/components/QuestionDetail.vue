@@ -1,10 +1,18 @@
 <script setup>
 import axios from 'axios';
 import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import Answer from "./Answer.vue";
+import { getUserConnected } from "../userConnected.js";
+
+const user = ref(null);
+
+onMounted(async () => {
+  user.value = await getUserConnected();
+  console.log(user.value);
+});
 
 const route = useRoute();
 const questionId = ref(route.params.id);
@@ -15,14 +23,15 @@ const tags = ref([]);
 const answers = ref([]);
 
 axios.get('http://127.0.0.1:8000/api/questions/' + questionId.value)
-    .then(response => {
-      question.value = response.data.question;
-      tags.value = response.data.question.tags;
-      answers.value = response.data.question.answers;
-    })
-    .catch(error => {
-      console.log(error);
-    });
+  .then(response => {
+    question.value = response.data.question;
+    console.log(question.value);
+    tags.value = response.data.question.tags;
+    answers.value = response.data.question.answers;
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
 // fonction pour formater la date
 const timeAgo = (date) => {
@@ -33,29 +42,43 @@ const token = localStorage.getItem('token');
 const config = {
   headers: { Authorization: `Bearer ${token}` }
 };
+
 // fonctions pour gérer les votes
 const vote = (answerId, increment) => {
   if (increment === 1) {
     // Logique pour voter positivement
     axios.put(`http://127.0.0.1:8000/api/answers/${answerId}/incrementvote`, {}, config)
-        .then(response => {
-          const index = answers.value.findIndex(answer => answer.id === answerId);
-          answers.value[index].votes++;
-        })
-        .catch(error => {
-         alert(error.response.data.message)
-        });
+      .then(response => {
+        const index = answers.value.findIndex(answer => answer.id === answerId);
+        answers.value[index].votes++;
+      })
+      .catch(error => {
+        alert(error.response.data.message);
+      });
   } else {
     // Logique pour voter négativement
-    axios.put(`http://127.0.0.1:8000/api/answers/${answerId}/decrementvote` , {}, config)
-        .then(response => {
-          const index = answers.value.findIndex(answer => answer.id === answerId);
-          answers.value[index].votes--;
-        })
-        .catch(error => {
-          alert(error.response.data.message)
-        });
+    axios.put(`http://127.0.0.1:8000/api/answers/${answerId}/decrementvote`, {}, config)
+      .then(response => {
+        const index = answers.value.findIndex(answer => answer.id === answerId);
+        answers.value[index].votes--;
+      })
+      .catch(error => {
+        alert(error.response.data.message);
+      });
   }
+};
+
+// fonction pour valider une réponse
+const validateAnswer = (answerId) => {
+  axios.put(`http://127.0.0.1:8000/api/answers/${answerId}/validate`, { supervisor_id: "1" }, config)
+    .then(response => {
+      const index = answers.value.findIndex(answer => answer.id === answerId);
+      answers.value[index].is_validated = true; // Mettre à jour l'état de validation de la réponse
+      alert('Réponse validée avec succès!');
+    })
+    .catch(error => {
+      alert(error.response.data.message);
+    });
 };
 
 // fonction pour modifier
@@ -69,7 +92,7 @@ const editAnswer = (answerId) => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4">
+  <div  class="container mx-auto px-4">
     <div class="border p-4 rounded-md my-8">
       <h2 class="text-4xl font-semibold mb-2">{{ question.title }}</h2>
       <hr class="my-4">
@@ -77,8 +100,10 @@ const editAnswer = (answerId) => {
       <div class="mt-2">
         <span v-for="tag in tags" :key="tag.id" class="mr-1 inline-block bg-blue-200 text-blue-800 p-2 rounded-full text-sm font-semibold tracking-wide">{{ tag.name }}</span>
       </div>
-      <div class="mt-4 flex justify-between items-center text-gray-500">
-        <button @click="editQuestion" class="text-blue-500 hover:text-blue-700">Modifier</button>
+      <div  class="mt-4 flex justify-between items-center text-gray-500">
+        <div v-if="user">
+        <button v-if="question.user_id === user.id" @click="editQuestion" class="text-blue-500 hover:text-blue-700">Modifier</button>
+      </div>
         <p>Posté par {{ question.user.name }} {{ timeAgo(question.created_at) }}</p>
       </div>
     </div>
@@ -100,18 +125,19 @@ const editAnswer = (answerId) => {
           <div class="flex-1 flex flex-col justify-between">
             <p class="text-gray-700">{{ answer.body }}</p>
             <div class="mt-2 flex justify-between items-center text-gray-500">
-              <button @click="editAnswer(answer.id)" class="text-blue-500 hover:text-blue-700">Modifier</button>
+              <div v-if="user">
+              <button v-if="user.id === answer.user_id" @click="editAnswer(answer.id)" class="text-blue-500 hover:text-blue-700">Modifier</button>
+              </div>
+              <button @click="validateAnswer(answer.id)" class="text-green-500 hover:text-green-700" v-if="!answer.is_validated">Valider</button>
+              <p v-if="answer.is_validated" class="text-green-500 font-semibold">Validée</p>
               <p>Répondu par {{ answer.user.name }} {{ timeAgo(answer.created_at) }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <Answer :questionId="questionId" />
   </div>
-
-  <Answer :questionId="questionId" />
-
-
 </template>
 
 <style scoped>
