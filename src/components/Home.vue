@@ -92,14 +92,14 @@ const sortedQuestions = computed(() => {
     <div v-for="question in sortedQuestions" :key="question.id" class="border p-4 rounded-md my-8 hover:shadow-lg">
       <router-link :to="{ path: '/question/show/' + question.id }" class="flex justify-between items-center px-8">
         <div>
-        <h2 class="text-xl font-bold mb-2">{{ question.title }}</h2>
-        <p class="text-gray-700">{{ question.body }}</p>
-        <div class="mt-2">
-          <span v-for="tag in question.tags" :key="tag.id" class="mr-1 inline-block bg-blue-100 text-blue-800 p-2 rounded-xl text-sm font-semibold tracking-wide">{{ tag.name }}</span>
+          <h2 class="text-xl font-bold mb-2">{{ question.title }}</h2>
+          <p class="text-gray-700">{{ question.body }}</p>
+          <div class="mt-2">
+            <span v-for="tag in question.tags" :key="tag.id" class="mr-1 inline-block bg-blue-100 text-blue-800 p-2 rounded-xl text-sm font-semibold tracking-wide">{{ tag.name }}</span>
         </div>
-        <p v-if="question.answers.length === 1" class="question-with-response text-xs text-gray-500 mt-2  inline-block p-1 rounded-lg">{{'1 Réponse' }}</p>
-        <p v-if="question.answers.length > 1" class="question-with-response text-xs text-gray-500 mt-2 inline-block p-1 rounded-lg">{{question.answers.length + ' Réponses' }}</p>
-        <p v-if="question.answers.length <= 0" class="text-xs text-gray-500 mt-2 inline-block p-1 rounded-lg">{{'0 Réponses' }}</p>
+          <p v-if="question.answers.length === 1" class="question-with-response text-xs text-gray-500 mt-2  inline-block p-1 rounded-lg">{{'1 Réponse' }}</p>
+          <p v-if="question.answers.length > 1" class="question-with-response text-xs text-gray-500 mt-2 inline-block p-1 rounded-lg">{{question.answers.length + ' Réponses' }}</p>
+          <p v-if="question.answers.length <= 0" class="text-xs text-gray-500 mt-2 inline-block p-1 rounded-lg">{{'0 Réponses' }}</p>
         </div>
 
 <!--        l'utilisateur qui a pose la question -->
