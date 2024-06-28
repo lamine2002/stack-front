@@ -3,6 +3,12 @@ import axios from 'axios';
 import { onMounted, ref, computed } from "vue";
 import { getUserConnected } from "../userConnected.js";
 import router from "../router.js";
+import {formatDistanceToNow} from "date-fns";
+import {fr} from "date-fns/locale";
+
+const timeAgo = (date) => {
+  return formatDistanceToNow(new Date(date), { addSuffix: true, locale: fr });
+};
 
 const questions = ref([]);
 const filters = ref({ title: '', tag: '', answered: '' });
@@ -84,7 +90,8 @@ const sortedQuestions = computed(() => {
 
   <div class="container mx-auto px-4">
     <div v-for="question in sortedQuestions" :key="question.id" class="border p-4 rounded-md my-8 hover:shadow-lg">
-      <router-link :to="{ path: '/question/show/' + question.id }">
+      <router-link :to="{ path: '/question/show/' + question.id }" class="flex justify-between items-center px-8">
+        <div>
         <h2 class="text-xl font-bold mb-2">{{ question.title }}</h2>
         <p class="text-gray-700">{{ question.body }}</p>
         <div class="mt-2">
@@ -93,7 +100,12 @@ const sortedQuestions = computed(() => {
         <p v-if="question.answers.length === 1" class="question-with-response text-xs text-gray-500 mt-2  inline-block p-1 rounded-lg">{{'1 Réponse' }}</p>
         <p v-if="question.answers.length > 1" class="question-with-response text-xs text-gray-500 mt-2 inline-block p-1 rounded-lg">{{question.answers.length + ' Réponses' }}</p>
         <p v-if="question.answers.length <= 0" class="text-xs text-gray-500 mt-2 inline-block p-1 rounded-lg">{{'0 Réponses' }}</p>
+        </div>
 
+<!--        l'utilisateur qui a pose la question -->
+        <div class="">
+          <p class="text-gray-700">{{'Posée par ' + question.user.name }} {{ timeAgo(question.created_at) }}</p>
+        </div>
       </router-link>
     </div>
   </div>
