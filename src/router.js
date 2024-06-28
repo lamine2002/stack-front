@@ -6,6 +6,7 @@ import QuestionDetail from "./components/QuestionDetail.vue";
 import CreateQuestion from "./components/CreateQuestion.vue";
 import Tags from "./components/Tags.vue";
 import MyQuestions from "./components/MyQuestions.vue";
+import UpdateQuestion from "./components/UpdateQuestion.vue";
 
 
 const routes = [
@@ -23,6 +24,12 @@ const routes = [
     path: '/question/create',
     component: CreateQuestion,
     meta: { requiresAuth: true }  // Ajoute la métadonnée pour la protection de la route
+  },
+  {
+    path: '/question/edit/:id',
+    component: UpdateQuestion,
+    props: true,
+    meta: { requiresAuth: true }
   },
   {
     path: '/tags',

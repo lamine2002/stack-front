@@ -102,7 +102,7 @@ const editAnswer = (answerId) => {
       </div>
       <div  class="mt-4 flex justify-between items-center text-gray-500">
         <div v-if="user">
-        <button v-if="question.user_id === user.id" @click="editQuestion" class="text-blue-500 hover:text-blue-700">Modifier</button>
+        <router-link  :to="{ path: '/question/edit/' + question.id }" v-if="question.user_id === user.id" @click="editQuestion" class="text-blue-500 hover:text-blue-700">Modifier</router-link>
       </div>
         <p>Posté par {{ question.user.name }} {{ timeAgo(question.created_at) }}</p>
       </div>
