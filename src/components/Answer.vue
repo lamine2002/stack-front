@@ -42,7 +42,7 @@ const createAnswer = () => {
   }, config)
       .then(response => {
         // console.log(response.data);
-        alert('Réponse créée avec succès');
+        // alert('Réponse créée avec succès');
         body.value = '';
         window.location.reload();
 

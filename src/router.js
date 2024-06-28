@@ -8,6 +8,7 @@ import Tags from "./components/Tags.vue";
 import MyQuestions from "./components/MyQuestions.vue";
 import UpdateQuestion from "./components/UpdateQuestion.vue";
 import Profile from "./components/Profile.vue";
+import CreateTag from "./components/CreateTag.vue";
 
 
 const routes = [
@@ -40,6 +41,11 @@ const routes = [
   {
     path: '/tags',
     component: Tags
+  },
+  {
+    path: '/tag/create',
+    component: CreateTag,
+    meta: { requiresAuth: true }
   },
   {
     path: '/my-questions',
