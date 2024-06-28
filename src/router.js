@@ -7,6 +7,7 @@ import CreateQuestion from "./components/CreateQuestion.vue";
 import Tags from "./components/Tags.vue";
 import MyQuestions from "./components/MyQuestions.vue";
 import UpdateQuestion from "./components/UpdateQuestion.vue";
+import Profile from "./components/Profile.vue";
 
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
   { path: '/login', component: Login },
   {
     path: '/register', component: Register
+  },
+  {
+    path: '/user',
+    component: Profile,
+    meta: { requiresAuth: true }
   },
   {
     path: '/question/show/:id',
