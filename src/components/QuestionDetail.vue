@@ -121,7 +121,7 @@ const editAnswer = (answerId) => {
             <button @click="vote(answer.id, -1)" class="text-red-500 hover:text-red-700 text-xl font-bold rounded-full w-10 h-10 flex items-center justify-center border-2">
               ▼
             </button>
-            <button @click="validateAnswer(answer.id)" class="mt-4 text-green-500 hover:text-green-700" v-if="!answer.is_validated">
+            <button @click="validateAnswer(answer.id)" class="mt-4 text-green-500 hover:text-green-700" v-if="!answer.is_validated && user">
               <svg fill="#047a3f" height="30px" width="30px" version="1.1" id="XMLID_215_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                    viewBox="0 0 24 24" xml:space="preserve">
                 <g id="validation">
